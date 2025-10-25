@@ -1,0 +1,80 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║           📋 VARIABLES D'ENVIRONNEMENT - Copier/Coller                  ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔴 VARIABLES API (10 variables)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DATABASE_URL
+postgresql://neondb_owner:npg_sxo5L0CQyfhO@ep-red-wind-a4t3a5fb-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require
+
+REDIS_URL
+redis://default:QO7v94Lt9abw5gEv96pluKLjU6uRJZMH@redis-18352.c261.us-east-1-4.ec2.redns.redis-cloud.com:18352
+
+BASE_RPC_URL
+https://base-sepolia.g.alchemy.com/v2/6SjWPHTigzdmD1FHZjyEC
+
+BASE_CHAIN_ID
+84532
+
+ARK_ADDRESS
+0x155037a9854cefb83c7b90dd0499b7b64c1a120c
+
+XPREGISTRY_ADDRESS
+0x155037a9854cefb83c7b90dd0499b7b64c1a120c
+
+BADGE_ADDRESS
+0x155037a9854cefb83c7b90dd0499b7b64c1a120c
+
+ESCROW_ADDRESS
+0x155037a9854cefb83c7b90dd0499b7b64c1a120c
+
+FAUCET_AMOUNT_WEI
+1000000000000000000
+
+FAUCET_COOLDOWN_SEC
+86400
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🟦 VARIABLES WEB (8 variables)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️  IMPORTANT: Remplacez https://api-xxx.vercel.app par votre vraie URL API!
+
+VITE_API_URL
+https://api-xxx.vercel.app
+
+VITE_WC_PROJECT_ID
+1e45a83fc2d0bd03d1b879590322bd87
+
+VITE_ARK_ADDRESS
+0x155037a9854cefb83c7b90dd0499b7b64c1a120c
+
+VITE_XPREGISTRY_ADDRESS
+0x155037a9854cefb83c7b90dd0499b7b64c1a120c
+
+VITE_BADGE_ADDRESS
+0x155037a9854cefb83c7b90dd0499b7b64c1a120c
+
+VITE_ESCROW_ADDRESS
+0x155037a9854cefb83c7b90dd0499b7b64c1a120c
+
+VITE_BASE_CHAIN_ID
+84532
+
+VITE_BASE_RPC_URL
+https://base-sepolia.g.alchemy.com/v2/6SjWPHTigzdmD1FHZjyEC
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║  📌 INSTRUCTIONS                                                          ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+1. Ouvrir: https://vercel.com/valentinbracqs-projects/api/settings/environment-variables
+2. Cliquer "Add New" pour chaque variable
+3. Copier le nom et la valeur ci-dessus
+4. Sélectionner "Production"
+5. Cliquer "Save"
+6. Répéter pour toutes les variables
+7. Redéployer!
+

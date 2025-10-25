@@ -17,12 +17,12 @@ export const walletClient = createWalletClient({
 
 export const addr = {
   ARK: env.ARK_ADDRESS as Address,
-  XP: env.XPREGISTRY_ADDRESS as Address,
-  BADGE: env.BADGE_ADDRESS as Address,
-  ESCROW: env.ESCROW_ADDRESS as Address
+  XP: env.XPREGISTRY_ADDRESS as Address | undefined,
+  BADGE: env.BADGE_ADDRESS as Address | undefined,
+  ESCROW: env.ESCROW_ADDRESS as Address | undefined
 };
 
 export const ark = { address: addr.ARK, abi: ARK as any };
-export const xp  = { address: addr.XP, abi: XP as any };
-export const badge = { address: addr.BADGE, abi: BADGE as any };
-export const escrow = { address: addr.ESCROW, abi: ESCROW as any };
+export const xp  = addr.XP ? { address: addr.XP, abi: XP as any } : null;
+export const badge = addr.BADGE ? { address: addr.BADGE, abi: BADGE as any } : null;
+export const escrow = addr.ESCROW ? { address: addr.ESCROW, abi: ESCROW as any } : null;

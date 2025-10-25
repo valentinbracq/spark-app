@@ -1,4 +1,4 @@
 node_modules
 .pnpm-store
-apps/web/node_modules
-packages/**
+# Only ignore packages node_modules, not the packages themselves
+packages/*/node_modules

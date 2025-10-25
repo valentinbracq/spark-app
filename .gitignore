@@ -11,25 +11,24 @@ build/
 apps/web/build/
 apps/web/dist/
 apps/api/dist/
+packages/shared/dist/
 
-# Environment files
+# Environment files (NEVER commit sensitive data!)
 .env
-.env.*
+.env.local
+.env.*.local
 apps/**/.env
 packages/**/.env
 
-# Local/Editor
+# Vercel
 .vercel
+
+# Local/Editor
 .vscode/
 .DS_Store
+*.swp
+*.swo
 
 # Misc
 coverage/
-*.local
-
-node_modules
-dist
-.env
-.env.*
-pnpm-lock.yaml
-.DS_Store
+*.log

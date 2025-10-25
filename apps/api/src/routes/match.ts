@@ -140,31 +140,37 @@ export async function registerMatchRoutes(app: FastifyInstance) {
     if (loser)  upd.push(prisma.user.update({ where: { id: loser.id },  data: { xp: loser.xp + xpL,  tier: tierFromXP(loser.xp + xpL) as any } }));
     await prisma.$transaction(upd);
 
-        // 1) Settle escrow if applicable (only when escrowId exists)
+        // 1) Settle escrow if applicable (only when escrowId exists and escrow contract is configured)
         const mAny: any = m as any;
-        if (mAny.escrowId) {
+        if (mAny.escrowId && escrow) {
           const winnerAddr = winner ? winner.walletAddress as `0x${string}` : "0x0000000000000000000000000000000000000000";
           await walletClient.writeContract({ ...escrow, functionName: "settle", args: [mAny.escrowId as any, winnerAddr] });
         }
 
-    // 2) Mirror XP on-chain
-    const wAfter = winner ? await prisma.user.findUniqueOrThrow({ where: { id: winner.id } }) : null;
-    const lAfter = loser  ? await prisma.user.findUniqueOrThrow({ where: { id: loser.id } }) : null;
-    if (wAfter) await walletClient.writeContract({ ...xpC, functionName: "setXP", args: [wAfter.walletAddress as `0x${string}`, wAfter.xp] });
-    if (lAfter) await walletClient.writeContract({ ...xpC, functionName: "setXP", args: [lAfter.walletAddress as `0x${string}`, lAfter.xp] });
+    // 2) Mirror XP on-chain (only if XP contract is configured)
+    if (xpC) {
+      const wAfter = winner ? await prisma.user.findUniqueOrThrow({ where: { id: winner.id } }) : null;
+      const lAfter = loser  ? await prisma.user.findUniqueOrThrow({ where: { id: loser.id } }) : null;
+      if (wAfter) await walletClient.writeContract({ ...xpC, functionName: "setXP", args: [wAfter.walletAddress as `0x${string}`, wAfter.xp] });
+      if (lAfter) await walletClient.writeContract({ ...xpC, functionName: "setXP", args: [lAfter.walletAddress as `0x${string}`, lAfter.xp] });
+    }
 
-    // 3) Mint badge if crossed thresholds
-    async function maybeMint(addr: string, xpNow: number) {
-    const tier = tierFromXP(xpNow);
-    const tierIndex = tier === "BRONZE" ? 0 : tier === "SILVER" ? 1 : tier === "GOLD" ? 2 : 3;
-    if (tierIndex > 0) {
-        try {
-        await walletClient.writeContract({ ...badgeC, functionName: "mintBadge", args: [addr as `0x${string}`, tierIndex as any] });
-        } catch { /* ignore if already minted */ }
+    // 3) Mint badge if crossed thresholds (only if badge contract is configured)
+    if (badgeC) {
+      async function maybeMint(addr: string, xpNow: number) {
+        const tier = tierFromXP(xpNow);
+        const tierIndex = tier === "BRONZE" ? 0 : tier === "SILVER" ? 1 : tier === "GOLD" ? 2 : 3;
+        if (tierIndex > 0) {
+          try {
+            await walletClient.writeContract({ ...badgeC, functionName: "mintBadge", args: [addr as `0x${string}`, tierIndex as any] });
+          } catch { /* ignore if already minted */ }
+        }
+      }
+      const wAfter = winner ? await prisma.user.findUniqueOrThrow({ where: { id: winner.id } }) : null;
+      const lAfter = loser  ? await prisma.user.findUniqueOrThrow({ where: { id: loser.id } }) : null;
+      if (wAfter) await maybeMint(wAfter.walletAddress, wAfter.xp);
+      if (lAfter) await maybeMint(lAfter.walletAddress, lAfter.xp);
     }
-    }
-    if (wAfter) await maybeMint(wAfter.walletAddress, wAfter.xp);
-    if (lAfter) await maybeMint(lAfter.walletAddress, lAfter.xp);
 
 
     return { ok: true };
