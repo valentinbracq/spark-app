@@ -1,4 +1,4 @@
 {
-  "buildCommand": "prisma generate && tsc",
+  "buildCommand": "pnpm prisma generate && pnpm tsc",
   "installCommand": "pnpm install --shamefully-hoist"
 }
